@@ -9,18 +9,18 @@
 # License: MIT
 #
 
-"""This module exports the PEP8 plugin linter class."""
+"""This module exports the PYCODESTYLE plugin linter class."""
 
 import os
 
 from SublimeLinter.lint import persist, PythonLinter
 
 
-class PEP8(PythonLinter):
+class PYCODESTYLE(PythonLinter):
     """Provides an interface to the pep8 python module/script."""
 
     syntax = 'python'
-    cmd = ('pep8@python', '*', '-')
+    cmd = ('pycodestyle@python', '*', '-')
     version_args = '--version'
     version_re = r'(?P<version>\d+\.\d+\.\d+)'
     version_requirement = '>= 1.4.6'
@@ -33,14 +33,14 @@ class PEP8(PythonLinter):
     }
     inline_settings = 'max-line-length'
     inline_overrides = ('select', 'ignore')
-    module = 'pep8'
+    module = 'pycodestyle'
     check_version = True
 
     # Internal
     report = None
 
     def check(self, code, filename):
-        """Run pep8 on code and return the output."""
+        """Run pycodestyle on code and return the output."""
         options = {
             'reporter': self.get_report()
         }
@@ -56,25 +56,25 @@ class PEP8(PythonLinter):
 
         final_options = options.copy()
 
-        # Try to read options from pep8 default configuration files (.pep8, tox.ini).
+        # Try to read options from pycodestyle default configuration files (.pycodestyle, tox.ini).
         # If present, they will override the ones defined by Sublime Linter's config.
         try:
-            # `onError` will be called by `process_options` when no pep8 configuration file is found.
+            # `onError` will be called by `process_options` when no pycodestyle configuration file is found.
             # Override needed to supress OptionParser.error() output in the default parser.
             def onError(msg):
                 pass
 
-            from pep8 import process_options, get_parser
+            from pycodestyle import process_options, get_parser
             parser = get_parser()
             parser.error = onError
-            pep8_options, _ = process_options([os.curdir], True, True, parser=parser)
+            pycodestyle_options, _ = process_options([os.curdir], True, True, parser=parser)
 
-            # Merge options only if the pep8 config file actually exists;
-            # pep8 always returns a config filename, even when it doesn't exist!
-            if os.path.isfile(pep8_options.config):
-                pep8_options = vars(pep8_options)
-                pep8_options.pop('reporter', None)
-                for opt_n, opt_v in pep8_options.items():
+            # Merge options only if the pycodestyle config file actually exists;
+            # pycodestyle always returns a config filename, even when it doesn't exist!
+            if os.path.isfile(pycodestyle_options.config):
+                pycodestyle_options = vars(pycodestyle_options)
+                pycodestyle_options.pop('reporter', None)
+                for opt_n, opt_v in pycodestyle_options.items():
                     if isinstance(final_options.get(opt_n, None), list):
                         final_options[opt_n] += opt_v
                     else:
@@ -97,7 +97,7 @@ class PEP8(PythonLinter):
     def get_report(self):
         """Return the Report class for use by flake8."""
         if self.report is None:
-            from pep8 import StandardReport
+            from pycodestyle import StandardReport
 
             class Report(StandardReport):
                 """Provides a report in the form of a single multiline string, without printing."""
@@ -107,7 +107,7 @@ class PEP8(PythonLinter):
                     self._deferred_print.sort()
                     results = ''
 
-                    for line_number, offset, code, text, doc in self._deferred_print:
+                    for line_number, offset, code, text, _ in self._deferred_print:
                         results += '{path}:{row}:{col}: {code} {text}\n'.format_map({
                             'path': self.filename,
                             'row': self.line_offset + line_number,
