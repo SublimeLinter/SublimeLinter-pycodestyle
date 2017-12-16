@@ -1,7 +1,7 @@
-SublimeLinter-pep8
+SublimeLinter-pycodestyle
 =========================
 
-[![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-pep8.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-pep8)
+[![Build Status](https://travis-ci.org/SublimeLinter/SublimeLinter-pycodestyle.svg?branch=master)](https://travis-ci.org/SublimeLinter/SublimeLinter-pycodestyle)
 
 This linter plugin for [SublimeLinter](http://sublimelinter.readthedocs.org) provides an interface to [pycodestyle](https://github.com/PyCQA/pycodestyle). It will be used with files that have the “Python” syntax.
 
