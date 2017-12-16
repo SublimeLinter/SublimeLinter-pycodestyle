@@ -31,8 +31,6 @@ class PYCODESTYLE(PythonLinter):
         '--ignore=,': '',
         '--max-line-length=': None
     }
-    inline_settings = 'max-line-length'
-    inline_overrides = ('select', 'ignore')
     module = 'pycodestyle'
     check_version = True
 
