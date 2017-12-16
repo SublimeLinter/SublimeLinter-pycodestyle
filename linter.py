@@ -67,9 +67,7 @@ class PYCODESTYLE(PythonLinter):
             parser.error = onError
             pycodestyle_options, _ = process_options([os.curdir], True, True, parser=parser)
 
-            # Merge options only if the pycodestyle config file actually exists;
-            # pycodestyle always returns a config filename, even when it doesn't exist!
-            if os.path.isfile(pycodestyle_options.config):
+            if pycodestyle_options.config:
                 pycodestyle_options = vars(pycodestyle_options)
                 pycodestyle_options.pop('reporter', None)
                 for opt_n, opt_v in pycodestyle_options.items():
