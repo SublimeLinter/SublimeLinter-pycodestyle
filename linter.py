@@ -11,9 +11,8 @@
 
 """This module exports the PYCODESTYLE plugin linter class."""
 
-import os
 
-from SublimeLinter.lint import persist, PythonLinter
+from SublimeLinter.lint import PythonLinter
 
 
 class PYCODESTYLE(PythonLinter):
