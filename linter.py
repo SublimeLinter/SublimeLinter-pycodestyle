@@ -6,5 +6,8 @@ class PYCODESTYLE(PythonLinter):
     regex = r'^.+?:(?P<line>\d+):(?P<col>\d+): (?:(?P<error>E\d+)|(?P<warning>W\d+)) (?P<message>.+)'
     multiline = True
     defaults = {
-        'selector': 'source.python'
+        'selector': 'source.python',
+        '--select=,': '',
+        '--ignore=,': '',
+        '--max-line-length=': None
     }
